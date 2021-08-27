@@ -1,0 +1,148 @@
+<div class="container mt-5 text-center">
+    
+    <h4 >Subasta <b>Paraguay</b></h4>
+   
+</div>
+
+<div class="row">
+
+    <div *ngFor="let producto of productos"  class="col-sm-3" >
+        <div class="card">
+            <div class="card-header">
+              <div class="text-center">
+                    {{ producto.nombre }}
+              </div>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    <img src="assets/subasta.jpg" >
+                    <h4> <b>{{ producto.valor }}U$</b></h4>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button class="btn btn-success" type="button" (click)="onSubastar(producto, modalSubastar )">Dar mi oferta</button>
+                    <button class="btn btn-warning" type="button" (click)="onLanzamientos(producto, modalLanzamientos )">Lanzamientos</button>
+                </div>
+            </div>
+        </div>
+        
+    </div>  
+</div>
+<div>
+    <button type="button" class="btn btn-link" routerLink="/principal"><i class="fa fa-arrow-left"></i>Principal</button> 
+</div>
+
+
+<ng-template #modalSubastar>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left"><b>Mi Oferta</b></h4>
+    </div>
+
+    <div class="content mt-4 p-2">
+        <form [formGroup]="formSubasta">
+            <div class="row">
+                <div class="col-sm-6" *ngIf="false">
+                    <div class="form-group">
+                        <label for="idProducto">ID</label>
+                        <input type="text" class="form-control" formControlName="idProducto"  id="idProducto" disabled = "true">
+                    </div>
+                 </div>
+
+                 <div class="col-sm-6" >
+                    <div class="form-group">
+                        <label for="producto">Producto</label>
+                        <input type="text" class="form-control" formControlName="producto"  id="producto" disabled = "true">
+                    </div>
+                 </div>
+
+                 <div class="col-sm-6" >
+                    <div class="form-group">
+                        <label for="costoProducto">Ofrecido inicialmente a:</label>
+                        <input type="text" class="form-control" formControlName="costoProducto"  id="costoProducto" disabled = "true">
+                    </div>
+                 </div>
+
+            </div>
+            <div class="row">
+
+            </div>    
+
+            <div class="row" >
+
+                <div class="col-sm-6" *ngIf="false">
+                    <div class="form-group">
+                        <label for="id">ID</label>
+                        <input type="text" class="form-control" formControlName="id"  id="id" disabled = "true">
+                    </div>
+                 </div>
+
+                 <div class="col-sm-6" >
+                    <div class="form-group">
+                        <label for="personaId">Oferente</label>
+                        <select class="form-control" id="personaId" (change)='onOptionsSelectedFiltro($event)'  formControlName="personaId">
+                          <option *ngFor="let persona of personas" [value]="persona.id" >{{ persona.nombre}}</option>
+                        </select>
+                    </div>
+                
+                </div>
+
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="montoOferta">Valor</label>
+                        <input type="number" class="form-control" formControlName="montoOferta"
+                            placeholder="Agregue valor del producto" id="montoOferta">
+                        <div *ngIf="formSubasta.controls['montoOferta'].invalid && formSubasta.controls['montoOferta'].dirty"
+                            class="alert alert-danger" role="alert">
+                            <span *ngIf="formSubasta.controls['montoOferta'].errors.required">Monto es requerido</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="onRealizarOferta()"
+           ><i class="fa fa-save"></i> Finalizar</button>
+        <button type="button" class="btn btn-danger" (click)="cerrarModal()"><i class="fa fa-window-close"></i> Cerrar</button>
+    </div>
+</ng-template>
+
+<ng-template #modalLanzamientos>
+
+    <div class="modal-header">
+        <h4 class="modal-title pull-left"><b>Lanzamientos realizados por este producto</b></h4>
+
+    </div>
+    <div class="content mt-4 p-2">
+        <div>
+            <table class="table table-striped" *ngIf="lanzamientos.length > 0">
+            <thead>
+                <tr>
+                   <th scope="col">Producto</th>
+                   <th scope="col">Precio inicial</th>
+                   <th scope="col">Precio ofertado</th>
+                   <th scope="col">Ofertante</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let lanzamiento of lanzamientos">
+                    <td>{{ lanzamiento.producto }}</td>
+                    <td>{{ lanzamiento.costoProducto }}</td>
+                    <td>{{ lanzamiento.montoOferta }}</td>
+                    <td>{{ lanzamiento.personaNombre }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div>
+                <p *ngIf="lanzamientos.length < 1">No hay lanzamientos realizados por este producto</p>
+             </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="cerrarModal()"><i class="fa fa-window-close"></i> Cerrar</button>
+    </div>
+</ng-template>

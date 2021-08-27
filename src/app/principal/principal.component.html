@@ -1,0 +1,133 @@
+<div class="container">
+    <div class="d-flex justify-content-center h-100">
+        <div class="card">
+            <div class="card-header">
+              <div class="text-center">
+                <h4 >Subasta <b>Paraguay</b></h4>
+              </div>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                    <img src="assets/logo.jpg" >
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button class="btn btn-warning" type="button" (click)="openModalRegistroPersona(modalPersona)">Registráte y participa !!</button>
+                    <button class="btn btn-success" type="button" (click)="irASubasta()">Dar mi oferta</button>
+                    <button class="btn btn-secondary" type="button" (click)="openModalRegistroProducto(modalProducto)">Registrar productos para subastar</button>
+                </div>
+            </div>
+        </div>
+      </div> 
+
+    
+</div>
+
+
+      
+<ng-template #modalProducto>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Carga de productos para la subasta</h4>
+    </div>
+
+    <div class="content mt-4 p-2">
+        <form [formGroup]="formProducto">
+
+            <div class="row" >
+
+                <div class="col-sm-6" *ngIf="false">
+                    <div class="form-group">
+                        <label for="id">ID</label>
+                        <input type="text" class="form-control" formControlName="id"  id="id" disabled = "true">
+                    </div>
+                 </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="nombre">Nombre del producto</label>
+                        <input type="text" class="form-control" formControlName="nombre"
+                            placeholder="Agregue nombre del producto a subastar" id="nombre">
+                        <div *ngIf="formProducto.controls['nombre'].invalid && formProducto.controls['nombre'].dirty"
+                            class="alert alert-danger" role="alert">
+                            <span *ngIf="formProducto.controls['nombre'].errors.required">Nombre del producto es requerido</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="valor">Valor</label>
+                        <input type="number" class="form-control" formControlName="valor"
+                            placeholder="Agregue valor del producto" id="valor">
+                        <div *ngIf="formProducto.controls['valor'].invalid && formProducto.controls['valor'].dirty"
+                            class="alert alert-danger" role="alert">
+                            <span *ngIf="formProducto.controls['valor'].errors.required">Valor del producto es requerido</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="onGuardarProducto()"
+            [disabled]="formProducto.invalid"><i class="fa fa-save"></i> Subastar</button>
+        <button type="button" class="btn btn-danger" (click)="cerrarModal()"><i class="fa fa-window-close"></i> Cerrar</button>
+    </div>
+</ng-template>
+
+
+<ng-template #modalPersona>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Registros de personas</h4>
+       ( Aviso: Personas menores de edad no podrán participar de la subasta )
+    </div>
+
+    <div class="content mt-4 p-2">
+        <form [formGroup]="formPersona">
+
+            <div class="row" >
+
+                <div class="col-sm-6" *ngIf="false">
+                    <div class="form-group">
+                        <label for="id">ID</label>
+                        <input type="text" class="form-control" formControlName="id"  id="id" disabled = "true">
+                    </div>
+                 </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" formControlName="nombre"
+                            placeholder="Agregue su nombre" id="nombre">
+                        <div *ngIf="formPersona.controls['nombre'].invalid && formPersona.controls['nombre'].dirty"
+                            class="alert alert-danger" role="alert">
+                            <span *ngIf="formPersona.controls['nombre'].errors.required">Nombre es requerido</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="edad">Edad</label>
+                        <input type="number" class="form-control" formControlName="edad"
+                            placeholder="Ingrese su edad" id="valor">
+                        <div *ngIf="formPersona.controls['edad'].invalid && formPersona.controls['edad'].dirty"
+                            class="alert alert-danger" role="alert">
+                            <span *ngIf="formPersona.controls['edad'].errors.required">Edad es requerido</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="onGuardarPersona()"
+            [disabled]="formPersona.invalid"><i class="fa fa-save"></i> Registrarme</button>
+        <button type="button" class="btn btn-danger" (click)="cerrarModal()"><i class="fa fa-window-close"></i> Cerrar</button>
+    </div>
+</ng-template>
